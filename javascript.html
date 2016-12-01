@@ -31,57 +31,47 @@
     </h1>
     <nav>
         <ul class="navigation flexcontainer">
-            <li><a href="#presentacion">presentacion</a></li>
-            <li><a href="#productos">productos</a></li>
-            <li><a href="#contacto">contacto</a></li>
-            <li><a href="#localizacion">localizacion</a></li>
+            <li><a href="#alumnos">alumnos</a></li>
+            <li><a href="#localizacion">alumnos</a></li>
+
         </ul>
     </nav>
 </header>
 <main class="flexcontainer">
-    <section id="presentacion">
-        <header><h2>presentacion</h2></header>
-        <div>
-            <p>IPARTEK FORMACION ofrece a la empresas y trabajadores, servicios de formación continua, tanto en modalidad presencial como Online (E-Learning).</p>
+    <section id="alumnos">
+        <header><h2>Listado de Alumnos</h2></header>
 
-            <p>Elaboramos el Plan formativo que mejor se adapte a sus necesidades, recursos y disponibilidad o planificamos acciones formativas puntuales en el área de las nuevas tecnologías:</p>
-            <ul>
-                <li> Informática de usuario y Ofimática: Word, Excel, Access, PowerPoint.</li>
-                <li> Lenguajes de programación y entornos de desarrollo, Bases de Datos, Herramientas y Metodologías.</li>
-                <li>Gestión de Proyectos.</li>
-                <li> Marketing: Publicidad y posicionamiento en Internet</li>
-                <li>  Web 2.0: Gestión e integración de Redes sociales en el ámbito empresarial</li>
-            </ul>
+        <div>
+            <button>Añadir</button>
+            <button>Borrar</button>
         </div>
-    </section>
-    <section id="productos">
-        <header><h2>productos</h2></header>
-        <div class="flexcontainer flex-center">
-            <input type="text" name="dni" id="dni" placeholder="Introduzca su dni"/>
-            <a class="btn btn-info">Calcular DNI</a>
-            <p class="flexcontainer flex-wrap">
-                <span class="resultado"></span>
-            </p>
-        </div>
-    </section>
-    <section id="contacto">
-        <header><h2>contacto</h2></header>
-        <div class="flexcontainer">
-            <form action="#" method="post">
-                <div>
-                    <input type="text" name="nombre" id="nombre" placeholder="Introduzca su nombre"/>
-                </div>
-                <div>
-                    <input type="text" name="apellidos" id="apellidos" placeholder="Introduzca sus Apellidos"/>
-                </div>
-                <div>
-                    <input type="email" name="email" id="email" placeholder="Introduzca su Email"/>
-                </div>
-                <div>
-                    <textarea name="comentario" id="comentario" placeholder="Escriba su comentario"></textarea>
-                </div>
-            </form>
-        </div>
+        <table id="listado-alumnos">
+            <thead>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>UF-1841</th>
+                <th>UF-1842</th>
+                <th>UF-1843</th>
+                <th>UF-1844</th>
+                <th>UF-1845</th>
+                <th>UF-1846</th>
+                <th>Nota Media</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tfoot>
+            <td>
+            <td colspan="3">Numero Alumnos</td>
+            <td colspan="2"></td>
+            <td colspan="3">Nota Media:</td>
+            <td colspan="3"></td>
+            </tr>
+            </tfoot>
+            <tbody>
+            </tbody>
+        </table>
     </section>
     <section id="localizacion">
         <header><h2>localizacion</h2></header>
