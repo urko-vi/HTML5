@@ -1,6 +1,7 @@
 $.noConflict();
 
 jQuery(document).ready(function($) {
+    /*
     function tracear(){
         // boolean, numericas, texto, Array (Object)
         var valor = $('#busqueda').val();//
@@ -12,9 +13,7 @@ jQuery(document).ready(function($) {
         //Urko
         // var genero = 1=="1" ? "hombre" : "mujer";
         console.log(valor);
-        /**
-         *
-         */
+
         $('#busqueda').val("Erasmo");
         valor = $('#busqueda').attr("value");//
         //Urko
@@ -23,21 +22,16 @@ jQuery(document).ready(function($) {
         valor =   $('#busqueda').val();
         console.log(valor);
     }
-
+     */
     $("a[href='s1'],a[href='#s2']").click(function (e) {
-       return false;
+        e.preventDefault();
+
     });
-    function recorgerDni(){
-        var dni = $('#dni').val();
-        var letra =calcularLetra(parseInt(dni,10));
-        console.log(letra);
-        return false;
-    }
-    $("#productos a.btn").click(function(e){
+    $('#productos').find("a.btn").click(function (e) {
         console.log("pasa");
         var dni = $('#dni').val();
         var letra =calcularLetra(parseInt(dni,10));
-        $("#productos span.resultado").text(letra);
+        $('#productos').find("span.resultado").text(letra);
         e.preventDefault();
         return false;
     });
@@ -45,7 +39,8 @@ jQuery(document).ready(function($) {
 });
 function calcularLetra(numero){
     var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
-    var letraCalculada = letras[numero % 23];
+    var letraCalculada;
+    letraCalculada = letras[numero % 23];
     return letraCalculada;
 }
 
