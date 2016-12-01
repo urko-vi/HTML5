@@ -34,9 +34,10 @@ jQuery(document).ready(function($) {
         return false;
     }
     $("#productos a.btn").click(function(e){
+        console.log("pasa");
         var dni = $('#dni').val();
         var letra =calcularLetra(parseInt(dni,10));
-        $("#productos p.resultado").text(letra);
+        $("#productos span.resultado").text(letra);
         e.preventDefault();
         return false;
     });
