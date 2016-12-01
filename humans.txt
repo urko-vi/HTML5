@@ -1,0 +1,22 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Chef:Urko Villanueva
+	Contact: hello [at] ipartek.com
+	From:Bilbao, Catalonia, Spain
+
+# THANKS
+
+
+#SITE
+Last update: 2016/12/01
+Standards: HTML5, CSS3,JavaScript.
+Components: Modernizr, jQuery, Normalize.css.
+Software: Software used for the development.
+Language:  Spanish.
+Doctype:HTML5
+IDE: WebStorm.
+
+
