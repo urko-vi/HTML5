@@ -3,7 +3,8 @@ var nombres = ["imanol"];
 var apellidos = ["jimenez lopez"];
 var nUF1841 = new Array();
 nUF1841['imanol'] = 5;
-var nUF1842 = [5];
+var nUF1842 = new Array();
+nUF1842['imanol'] = [5];
 var nUF1843 = [5];
 var nUF1844 = [5];
 var nUF1845 = [5];
@@ -31,6 +32,24 @@ jQuery(document).ready(function($) {
         }
     }
 
+    $("#listado-alumnos tbody button").click(function (e) {
+        alert("HAs pulsado en editar click");
+    });
+    $("#listado-alumnos tbody").on("click", "button", function (e) {
+        alert("HAs pulsado en editar con ON");
+    });
+    $("#listado-alumnos thead input").click(function (e) {
+        // $("#listado-alumnos tbody input[type='checkbox']").checked(true);
+        //attr vs (prop e is) ---> tiempo de carga
+        // prop vs is ---> prop identifica elementos cargados dinamicamente mientras is no
+        if ($("#listado-alumnos thead input").prop("checked")) {
+            $("#listado-alumnos tbody input").prop("checked", true);
+        } else {
+            $("#listado-alumnos tbody input").prop("checked", false);
+        }
+
+
+    });
     cargarAlumnos();
     /*
     function tracear(){
