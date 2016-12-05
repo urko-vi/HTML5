@@ -12,6 +12,7 @@ var nUF1846 = [5];
 
 jQuery(document).ready(function($) {
     function cargarAlumnos() {
+        var cantidad = nombres.length;
         for (var i = 0; i < nombres.length; i++) {
             var nombre = nombres[i];
             var apellido = apellidos[i];
@@ -31,6 +32,7 @@ jQuery(document).ready(function($) {
                 "</tr>";
             $('#listado-alumnos tbody').append(html_text);
         }
+        mostrarNAlumnos();
     }
 
     $("#listado-alumnos tbody button").click(function (e) {
@@ -97,6 +99,9 @@ jQuery(document).ready(function($) {
     $("#myModal").click(function (e) {
         $("#myModal").css("display", "none");
     });
+    function mostrarNAlumnos() {
+        $("#alumnos div span:eq(0)").text("Número de Alumnos: " + nombres.length)
+    }
     //tracear();
 });
 function calcularLetra(numero){

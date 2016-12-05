@@ -4,12 +4,12 @@
 # TEAM
     Chef:Urko Villanueva
 	Contact: hello [at] ipartek.com
-	From:Bilbao, Catalonia, Spain
+	From:Bilbao, Basque Country, Spain
 
 # THANKS
 
 #SITE
-Last update: 2016/12/01
+Last update: 2016/12/05
 Standards: HTML5, CSS3,JavaScript.
 Components: Modernizr, jQuery, Normalize.css.
 Software: Software used for the development.
