@@ -129,7 +129,6 @@ function borradoBBDD(codigo) {
         dnies.splice(pos, 1);
         delete nombres[codigo];
         delete apellidos[codigo];
-
         //....
     }
 }
