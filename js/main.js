@@ -80,7 +80,6 @@ jQuery(document).ready(function($) {
 
     });
     $('#productos').find("a.btn").click(function (e) {
-        console.log("pasa");
         var dni = $('#dni').val();
         var letra =calcularLetra(parseInt(dni,10));
         $('#productos').find("span.resultado").text(letra);
@@ -94,7 +93,6 @@ jQuery(document).ready(function($) {
     });
     $("#alumnos div button.btn-danger").on("click", function (e) {
         alert("Has pulsado borrar");
-        $("#myModal").css("display", "block");
     });
     $("#myModal").click(function (e) {
         $("#myModal").css("display", "none");

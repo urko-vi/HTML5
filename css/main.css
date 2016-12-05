@@ -138,6 +138,10 @@ body{
     font-family: Arial, sans-serif;
     font-style: normal;
 }
+
+button {
+    color: black;
+}
 form,
 article,section{
     display: -webkit-box;
