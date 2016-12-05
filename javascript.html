@@ -42,13 +42,14 @@
         <header><h2>Listado de Alumnos</h2></header>
 
         <div>
-            <button>Añadir</button>
-            <button>Borrar</button>
+            <button class="btn btn-info">Añadir</button>
+            <button class="btn btn-danger">Borrar</button>
+            <span>Total Alumnos:</span>
         </div>
         <table id="listado-alumnos">
             <thead>
             <tr>
-                <th><input type="checkbox"></th>
+                <th align="center"><input type="checkbox"></th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>UF-1841</th>
@@ -62,11 +63,9 @@
             </tr>
             </thead>
             <tfoot>
-            <td>
-            <td colspan="3">Numero Alumnos</td>
-            <td colspan="2"></td>
-            <td colspan="3">Nota Media:</td>
-            <td colspan="3"></td>
+            <tr>
+                <td colspan="8">Nota Media:</td>
+                <td colspan="3"></td>
             </tr>
             </tfoot>
             <tbody>
@@ -83,6 +82,45 @@
 <footer>
     Practicas con javascript
 </footer>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">×</span>
+            <h2>Titulo</h2>
+        </div>
+        <div class="modal-body">
+            <form action="#" method="post">
+                <!--
+                <div><label for="dn"></label><input type="text" value="" id="dni"/></div>
+                <input type="text" value="" id="nombre" name="nombre"/>
+                <input type="text" value="" id="apellidos" id="nombre"/>
+
+                --->
+                <div>
+                    <label class="desc" for="nombre">Nombre</label>
+                    <div>
+                        <input id="nombre" name="nombre" type="text" class="field text fn" value="" size="8"
+                               tabindex="1">
+                    </div>
+                </div>
+                <div>
+                    <label class="desc" for="dni">DNI</label>
+                    <div>
+                        <input id="dni" name="dni" type="email" spellcheck="false" value="" maxlength="9" tabindex="2">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--
+        <div class="modal-footer">
+            <h3>Modal Footer</h3>
+        </div>
+        -->
+    </div>
+
+</div>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

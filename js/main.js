@@ -16,7 +16,8 @@ jQuery(document).ready(function($) {
             var nombre = nombres[i];
             var apellido = apellidos[i];
             var html_text = "<tr>" +
-                "<td><input type='checkbox' value=''/> </td>" +
+                "<tr>" +
+                "<td align='center'><input type='checkbox' value=''/></td>" +
                 "<td>" + nombre + "</td>" +
                 "<td>" + apellido + "</td>" +
                 "<td>" + nUF1841[nombre] + "</td>" +
@@ -26,7 +27,7 @@ jQuery(document).ready(function($) {
                 "<td></td>" +
                 "<td></td>" +
                 "<td></td>" +
-                "<td><button>Editar</button></td>" +
+                "<td align='center'><button>Editar</button></td>" +
                 "</tr>";
             $('#listado-alumnos tbody').append(html_text);
         }
@@ -42,7 +43,8 @@ jQuery(document).ready(function($) {
         // $("#listado-alumnos tbody input[type='checkbox']").checked(true);
         //attr vs (prop e is) ---> tiempo de carga
         // prop vs is ---> prop identifica elementos cargados dinamicamente mientras is no
-        if ($("#listado-alumnos thead input").prop("checked")) {
+
+        if ($(this).prop("checked")) {
             $("#listado-alumnos tbody input").prop("checked", true);
         } else {
             $("#listado-alumnos tbody input").prop("checked", false);
@@ -84,6 +86,18 @@ jQuery(document).ready(function($) {
         $('#productos').find("span.resultado").text(letra);
         e.preventDefault();
         return false;
+    });
+    $("#alumnos div button.btn-info").on("click", function (e) {
+        alert("Has pulsado añadir");
+        $("#myModal").css("display", "block");
+
+    });
+    $("#alumnos div button.btn-danger").on("click", function (e) {
+        alert("Has pulsado borrar");
+        $("#myModal").css("display", "block");
+    });
+    $("#myModal").click(function (e) {
+        $("#myModal").css("display", "none");
     });
     //tracear();
 });
