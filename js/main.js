@@ -37,11 +37,11 @@ jQuery(document).ready(function($) {
                 "<td>" + apellido + "</td>" +
                 "<td>" + nUF1841[dni] + "</td>" +
                 "<td>" + nUF1842[dni] + "</td>" +
-                "<td></td>" +
-                "<td></td>" +
-                "<td></td>" +
-                "<td></td>" +
-                "<td></td>" +
+                "<td>" + nUF1843[dni] + "</td>" +
+                "<td>" + nUF1844[dni] + "</td>" +
+                "<td>" + nUF1845[dni] + "</td>" +
+                "<td>" + nUF1846[dni] + "</td>" +
+                "<td>" + calcularMedia([nUF1841[dni], nUF1842[dni], nUF1843[dni], nUF1844[dni], nUF1845[dni], nUF1846[dni]]) + "</td>" +
                 "<td align='center'><button>Editar</button></td>" +
                 "</tr>";
             $('#listado-alumnos tbody').append(html_text);
@@ -127,8 +127,14 @@ function borradoBBDD(codigo) {
     }
     if (pos != -1) {
         dnies.splice(pos, 1);
-        nombres[codigo] = null;
-        apellidos[codigo] = null;
+        delete nombres[codigo];
+        delete apellidos[codigo];
+
         //....
     }
+}
+function calcularMedia(numeros) {
+    var media = 0;
+
+    return media;
 }
