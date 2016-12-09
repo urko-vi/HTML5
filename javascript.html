@@ -90,27 +90,55 @@
             <h2>Titulo</h2>
         </div>
         <div class="modal-body">
+
+
             <form action="#" method="post">
+
                 <!--
                 <div><label for="dn"></label><input type="text" value="" id="dni"/></div>
                 <input type="text" value="" id="nombre" name="nombre"/>
                 <input type="text" value="" id="apellidos" id="nombre"/>
 
                 --->
-                <div>
+                <div class="flexcontainer">
                     <label class="desc" for="nombre">Nombre</label>
-                    <div>
+
                         <input id="nombre" name="nombre" type="text" class="field text fn" value="" size="8"
                                tabindex="1">
-                    </div>
+                </div>
+                <div class="flexcontainer">
+                    <label class="desc" for="dni">DNI</label>
+
+                    <input id="dni" name="dni" type="email" spellcheck="false" value="" maxlength="9" tabindex="2">
+
+                </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1841">N. UF-1841</label>
+
+                    <input id="nuf1841" name="nuf1841" type="number" spellcheck="false" value="" maxlength="9"
+                           tabindex="3">
+
+                </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1842">N. UF-1842</label>
+
+                    <input id="nuf1842" name="nuf1842" type="number" spellcheck="false" value="" maxlength="9"
+                           tabindex="4">
+                </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1843">N. UF-1843</label>
+
+                    <input id="nuf1843" name="nuf1843" type="number" spellcheck="false" value="" maxlength="9"
+                           tabindex="5">
                 </div>
                 <div>
-                    <label class="desc" for="dni">DNI</label>
-                    <div>
-                        <input id="dni" name="dni" type="email" spellcheck="false" value="" maxlength="9" tabindex="2">
-                    </div>
+                    <button class="btn btn-">Cancelar</button>
+                    <button class="btn btn-info">Guardar</button>
                 </div>
+
             </form>
+
+
         </div>
         <!--
         <div class="modal-footer">

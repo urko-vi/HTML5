@@ -1,3 +1,14 @@
+/*
+ 0º limpiar campos de la ventana modal antes de mostrar
+ 1º ventana modal: Guardar y Cancelar (cierre sin hacer nada)
+ 2º formulario en la ventana modal --> nombre, dni, apellidos y las notas de todos los modulos
+ 3º Validacion JavaScript: notas entre 0 y 10(si esta con datos), nombre al 3 caracteres, apellidos al 7, dni con 9 caracteres.
+ 4.1º Si esta bien se añade a la vista
+ 4.2º Si esta mal se muestra el error en la ventana modal
+ 5º se Añade a la BBDD (Array)
+ 6º Se oculta la ventana modal
+ */
+
 $.noConflict();
 var dnies = ["45751880G", "16087431N"];
 var nombres = new Array();
@@ -7,8 +18,8 @@ var apellidos = new Array();
 apellidos["45751880G"] = "jimenez lopez";
 apellidos["16087431N"] = "rivera del amo";
 var nUF1841 = new Array();
-nUF1841['45751880G'] = 5;
-nUF1841['16087431N'] = 5;
+nUF1841['45751880G'] = 7;
+nUF1841['16087431N'] = 8;
 var nUF1842 = new Array();
 nUF1842['45751880G'] = 5;
 nUF1842['16087431N'] = 5;
@@ -17,11 +28,13 @@ nUF1843['45751880G'] = 5;
 nUF1843['16087431N'] = 5;
 var nUF1844 = new Array();
 nUF1844['45751880G'] = 5;
+nUF1844['16087431N'] = 5;
 var nUF1845 = new Array();
 nUF1845['45751880G'] = 5;
-nUF1845['45751880G'] = 5;
+nUF1845['16087431N'] = 5;
 var nUF1846 = new Array();
 nUF1846['45751880G'] = 5;
+nUF1846['16087431N'] = 5;
 
 jQuery(document).ready(function($) {
     function cargarAlumnos() {
@@ -30,6 +43,7 @@ jQuery(document).ready(function($) {
             var dni = dnies[i];
             var nombre = nombres[dni];
             var apellido = apellidos[dni];
+            var notas = [nUF1841[dni], nUF1842[dni], nUF1843[dni], nUF1844[dni], nUF1845[dni], nUF1846[dni]];
             var html_text = "<tr>" +
                 "<tr>" +
                 "<td align='center'><input type='checkbox' value='" + dni + "'/></td>" +
@@ -40,8 +54,8 @@ jQuery(document).ready(function($) {
                 "<td>" + nUF1843[dni] + "</td>" +
                 "<td>" + nUF1844[dni] + "</td>" +
                 "<td>" + nUF1845[dni] + "</td>" +
-                "<td>" + nUF1846[dni] + "</td>" +
-                "<td>" + calcularMedia([nUF1841[dni], nUF1842[dni], nUF1843[dni], nUF1844[dni], nUF1845[dni], nUF1846[dni]]) + "</td>" +
+                "<td>" + nUF1846[dni] + "</td>" +//GET ByID (dni)-->
+                "<td>" + calcularMedia(notas).toFixed(2) + "</td>" +
                 "<td align='center'><button>Editar</button></td>" +
                 "</tr>";
             $('#listado-alumnos tbody').append(html_text);
@@ -65,8 +79,6 @@ jQuery(document).ready(function($) {
         } else {
             $("#listado-alumnos tbody input").prop("checked", false);
         }
-
-
     });
     cargarAlumnos();
     $("a[href='s1'],a[href='#s2']").click(function (e) {
@@ -81,22 +93,23 @@ jQuery(document).ready(function($) {
         return false;
     });
     $("#alumnos div button.btn-info").on("click", function (e) {
-        alert("Has pulsado añadir");
         $("#myModal").css("display", "block");
 
     });
     $("#alumnos div button.btn-danger").on("click", function (e) {
-        var codigo = "";
         //0 Recoger el dni de la vista
-
-        //1 Borrado de la vista
+        $("#listado-alumnos tbody input:checked").each(function (e) {
+            var codigo = $(this).val();
+            //1 Borrado de la BBDD
+            borradoBBDD(codigo);
+        });
+        //2Borrado de la vista
         borradoVista();
-        //2 Borrado de la BBDD
-        borradoBBDD(codigo);
+        //3 Actulizar el nº de Alumnos
         mostrarNAlumnos();
     });
     $("#myModal").click(function (e) {
-        $("#myModal").css("display", "none");
+        //$("#myModal").css("display", "none");
     });
     function mostrarNAlumnos() {
         $("#alumnos div span:eq(0)").text("Número de Alumnos: " + dnies.length)
@@ -129,11 +142,21 @@ function borradoBBDD(codigo) {
         dnies.splice(pos, 1);
         delete nombres[codigo];
         delete apellidos[codigo];
+        delete nUF1841[codigo];
+        delete nUF1842[codigo];
+        delete nUF1843[codigo];
+        delete nUF1844[codigo];
+        delete nUF1845[codigo];
+        delete nUF1846[codigo];
         //....
     }
 }
 function calcularMedia(numeros) {
     var media = 0;
-
+    var len = numeros.length
+    for (var i = 0; i < len; i++) {
+        media += numeros[i];
+    }
+    media = media / len;
     return media;
 }
