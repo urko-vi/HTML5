@@ -92,7 +92,7 @@
         <div class="modal-body">
 
 
-            <form action="#" method="post">
+            <form action="#" id="formAlumno" method="post">
 
                 <!--
                 <div><label for="dn"></label><input type="text" value="" id="dni"/></div>
@@ -101,28 +101,34 @@
 
                 --->
                 <div class="flexcontainer">
-                    <label class="desc" for="nombre">Nombre</label>
-
-                        <input id="nombre" name="nombre" type="text" class="field text fn" value="" size="8"
-                               tabindex="1">
-                </div>
-                <div class="flexcontainer">
                     <label class="desc" for="dni">DNI</label>
 
-                    <input id="dni" name="dni" type="email" spellcheck="false" value="" maxlength="9" tabindex="2">
+                    <input id="dni" name="dni" type="text" spellcheck="false" class="field text fn" value=""
+                           maxlength="9" autofocus>
+                </div>
+                <div class="flexcontainer">
+                    <label class="desc" for="nombre">Nombre</label>
 
+                    <input id="nombre" name="nombre" type="text" class="field text fn" value=""
+                           tabindex="1">
+                </div>
+                <div class="flexcontainer">
+                    <label class="desc" for="apellidos">Apellidos</label>
+
+                    <input id="apellidos" name="apellidos" type="text" class="field text fn" value=""
+                           tabindex="2">
                 </div>
                 <div class="flexcontainer ">
                     <label class="desc" for="nuf1841">N. UF-1841</label>
 
-                    <input id="nuf1841" name="nuf1841" type="number" spellcheck="false" value="" maxlength="9"
+                    <input id="nuf1841" name="nuf1841" type="number" spellcheck="false" value=""
                            tabindex="3">
 
                 </div>
                 <div class="flexcontainer ">
                     <label class="desc" for="nuf1842">N. UF-1842</label>
 
-                    <input id="nuf1842" name="nuf1842" type="number" spellcheck="false" value="" maxlength="9"
+                    <input id="nuf1842" name="nuf1842" type="number" spellcheck="false" value=""
                            tabindex="4">
                 </div>
                 <div class="flexcontainer ">
@@ -131,9 +137,27 @@
                     <input id="nuf1843" name="nuf1843" type="number" spellcheck="false" value="" maxlength="9"
                            tabindex="5">
                 </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1844">N. UF-1844</label>
+
+                    <input id="nuf1844" name="nuf1844" type="number" spellcheck="false" value=""
+                           tabindex="6">
+                </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1845">N. UF-1845</label>
+
+                    <input id="nuf1845" name="nuf1845" type="number" spellcheck="false" value=""
+                           tabindex="7">
+                </div>
+                <div class="flexcontainer ">
+                    <label class="desc" for="nuf1846">N. UF-1846</label>
+
+                    <input id="nuf1846" name="nuf1846" type="number" spellcheck="false" value=""
+                           tabindex="8">
+                </div>
                 <div>
-                    <button class="btn btn-">Cancelar</button>
-                    <button class="btn btn-info">Guardar</button>
+                    <button class="btn btn-info">Cancelar</button>
+                    <button class="btn btn-success">Guardar</button>
                 </div>
 
             </form>
