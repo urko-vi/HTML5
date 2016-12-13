@@ -119,7 +119,7 @@ jQuery(document).ready(function($) {
     $('#listado-alumnos').find('tbody').on("click", "button", function (e) {
         e.preventDefault();
         // alert("HAs pulsado en editar con ON");
-        var datos = {};
+        var datos = {id: '', nombre: '', dni: '', apellidos: '', notas: {}};
         ajax({url: URL, type: "PUT", data: datos})
             .then(cargarMensaje("El alumno ha sido modificado"), recogerErrorAjax)
             .catch(function errorHandler(error) {
