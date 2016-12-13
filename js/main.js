@@ -68,7 +68,7 @@ jQuery(document).ready(function($) {
                 notas['UF1846'] = "-";
             }
 
-            insertarAlumnoTabla(id, dni, nombre, apellido, notas);
+            insertarAlumnoTabla(id, nombre, apellido, notas);
         }
         mostrarNAlumnos(data.length);
     }
@@ -124,11 +124,13 @@ jQuery(document).ready(function($) {
         mostrarNAlumnos();
     }
      */
-    $("#listado-alumnos tbody button").click(function (e) {
+    $('#listado-alumnos').find("tbody button").click(function (e) {
+        e.preventDefault();
         alert("HAs pulsado en editar click");
     });
-    $("#listado-alumnos tbody").on("click", "button", function (e) {
-        alert("HAs pulsado en editar con ON");
+    $('#listado-alumnos').find('tbody').on("click", "button", function (e) {
+        e.preventDefault();
+        // alert("HAs pulsado en editar con ON");
         var datos = {};
         ajax({url: URL, type: "PUT", data: datos})
             .then(cargarMensaje("El alumno ha sido modificado"), recogerErrorAjax)
@@ -140,11 +142,11 @@ jQuery(document).ready(function($) {
         // $("#listado-alumnos tbody input[type='checkbox']").checked(true);
         //attr vs (prop e is) ---> tiempo de carga
         // prop vs is ---> prop identifica elementos cargados dinamicamente mientras is no
-
+        var $input = $("#listado-alumnos").find('tbody input');
         if ($(this).prop("checked")) {
-            $("#listado-alumnos tbody input").prop("checked", true);
+            $input.prop("checked", true);
         } else {
-            $("#listado-alumnos tbody input").prop("checked", false);
+            $input.prop("checked", false);
         }
     });
     //cargarAlumnos();
@@ -159,18 +161,15 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         return false;
     });
-    $("#alumnos div button.btn-info").on("click", function (e) {
-        $("#formAlumno input").val("");
+    $("#alumnos").find('div button.btn-info').on("click", function (e) {
+        e.preventDefault();
+        $('#formAlumno').find('input').val("");
         $("#myModal").css("display", "block");
-        //$("#myModal").css("display");
-        //$("#myModal").addClass("");
-        //$("#myModal").removeClass("")
-
-
     });
-    $("#alumnos div button.btn-danger").on("click", function (e) {
+    $("#alumnos").find("div button.btn-danger").on("click", function (e) {
+        e.preventDefault();
         //0 Recoger el dni de la vista
-        $("#listado-alumnos tbody input:checked").each(function (e) {
+        $("#listado-alumnos").find("tbody input:checked").each(function (e) {
             var codigo = $(this).val();
             console.log(codigo);
             ajax({url: URL, type: "DELETE", data: {id: codigo}})
@@ -185,9 +184,11 @@ jQuery(document).ready(function($) {
         mostrarNAlumnos();
     });
     $("#myModal button.btn-info,#myModal .close").click(function (e) {
+        e.preventDefault();
         $("#myModal").css("display", "none");
     });
-    $("#myModal .btn-success").on("click", function (e) {
+    $('#myModal').find(".btn-success").on("click", function (e) {
+        e.preventDefault();
         var valido = true;
         var dni = $("#dni").val();
         var nombre = $("#nombre").val();
@@ -252,7 +253,7 @@ jQuery(document).ready(function($) {
                 .then(function (data) {
                     id = data.id;
                     console.log(id);
-                    insertarAlumnoTabla(id, dni, nombre, apellido, notas)
+                    insertarAlumnoTabla(id, nombre, apellido, notas)
                     cargarMensaje("El alumno ha sido Guardado");
                 }, recogerErrorAjax)
                 .catch(function errorHandler(error) {
@@ -268,7 +269,7 @@ jQuery(document).ready(function($) {
             console.log("tiene errores");
         }
     });
-    function insertarAlumnoTabla(id, dni, nombre, apellido, notas) {
+    function insertarAlumnoTabla(id, nombre, apellido, notas) {
         var html_text = "<tr>" +
             "<td align='center'><input type='checkbox' value='" + id + "'/></td>" +
             "<td>" + nombre + "</td>" +
@@ -282,18 +283,18 @@ jQuery(document).ready(function($) {
             "<td>" + calcularMedia([notas['UF1841'], notas['UF1842'], notas['UF1843'], notas['UF1844'], notas['UF1845'], notas['UF1846']]).toFixed(2) + "</td>" +
             "<td align='center'><button>Editar</button></td>" +
             "</tr>";
-        $('#listado-alumnos tbody').append(html_text);
+        $('#listado-alumnos').find('tbody').append(html_text);
         console.log(html_text);
     }
 
     function mostrarNAlumnos(longitud) {
         //   var trs = $("#listado-alumnos tbody tr").length;
 
-        $("#alumnos div span:eq(0)").text("Número de Alumnos: " + longitud);
+        $('#alumnos').find('div span:eq(0)').text("Número de Alumnos: " + longitud);
     }
 
     function borradoVista() {
-        $("#listado-alumnos tbody tr input:checked").parents("tr").remove();
+        $('#listado-alumnos').find('tbody tr input:checked').parents('tr').remove();
     }
 
     $("#formAlumno").submit(function (e) {
