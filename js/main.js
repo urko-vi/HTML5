@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
             var dni = data[i].dni;
             var nombre = data[i].nombre;
             var apellido = data[i].apellidos;
-            var notas = new Array();
+            var notas = {};
             if (data[i].notas != undefined) {
                 notas['UF1841'] = data[i].notas.UF1841;
                 notas['UF1842'] = data[i].notas["UF1842"];
@@ -73,12 +73,8 @@ jQuery(document).ready(function($) {
         mostrarNAlumnos(data.length);
     }
 
-    function cargarMensaje() {
-
-    }
-
     function recogerErrorAjax(jqXHR, textStatus, errorThrown) {
-        alert("Error:" + jqXHR.toString());
+        alert("Error:" + jqXHR.toString() + textStatus + errorThrown);
     }
 
     ajax({url: URL, type: "GET"})
