@@ -1,42 +1,31 @@
-/*
- 0º limpiar campos de la ventana modal antes de mostrar
- 1º ventana modal: Guardar y Cancelar (cierre sin hacer nada)
- 2º formulario en la ventana modal --> nombre, dni, apellidos y las notas de todos los modulos
- 3º Validacion JavaScript: notas entre 0 y 10(si esta con datos), nombre al 3 caracteres, apellidos al 7, dni con 9 caracteres.
- 4.1º Si esta bien se añade a la vista
- 4.2º Si esta mal se muestra el error en la ventana modal
- 5º se Añade a la BBDD (Array)
- 6º Se oculta la ventana modal
- */
-
 $.noConflict();
 const URL = "http://localhost:2403/alumnos";
 /*
-var dnies = ["45751880G", "16087431N"];
-var nombres = new Array();
-nombres['45751880G'] = "Imanol";
-nombres['16087431N'] = "Marta";
-var apellidos = new Array();
-apellidos["45751880G"] = "jimenez lopez";
-apellidos["16087431N"] = "rivera del amo";
-var nUF1841 = new Array();
-nUF1841['45751880G'] = 7;
-nUF1841['16087431N'] = 8;
-var nUF1842 = new Array();
-nUF1842['45751880G'] = 5;
-nUF1842['16087431N'] = 5;
-var nUF1843 = new Array();
-nUF1843['45751880G'] = 5;
-nUF1843['16087431N'] = 5;
-var nUF1844 = new Array();
-nUF1844['45751880G'] = 5;
-nUF1844['16087431N'] = 5;
-var nUF1845 = new Array();
-nUF1845['45751880G'] = 5;
-nUF1845['16087431N'] = 5;
-var nUF1846 = new Array();
-nUF1846['45751880G'] = 5;
-nUF1846['16087431N'] = 5;
+ var dnies = ["45751880G", "16087431N"];
+ var nombres = new Array();
+ nombres['45751880G'] = "Imanol";
+ nombres['16087431N'] = "Marta";
+ var apellidos = new Array();
+ apellidos["45751880G"] = "jimenez lopez";
+ apellidos["16087431N"] = "rivera del amo";
+ var nUF1841 = new Array();
+ nUF1841['45751880G'] = 7;
+ nUF1841['16087431N'] = 8;
+ var nUF1842 = new Array();
+ nUF1842['45751880G'] = 5;
+ nUF1842['16087431N'] = 5;
+ var nUF1843 = new Array();
+ nUF1843['45751880G'] = 5;
+ nUF1843['16087431N'] = 5;
+ var nUF1844 = new Array();
+ nUF1844['45751880G'] = 5;
+ nUF1844['16087431N'] = 5;
+ var nUF1845 = new Array();
+ nUF1845['45751880G'] = 5;
+ nUF1845['16087431N'] = 5;
+ var nUF1846 = new Array();
+ nUF1846['45751880G'] = 5;
+ nUF1846['16087431N'] = 5;
  */
 jQuery(document).ready(function($) {
     function ajax(opciones) {
@@ -48,7 +37,7 @@ jQuery(document).ready(function($) {
     function cargarAlumnos(data) {
         for (var i = 0; i < data.length; i++) {
             var id = data[i].id;
-            var dni = data[i].dni;
+            // var dni = data[i].dni;
             var nombre = data[i].nombre;
             var apellido = data[i].apellidos;
             var notas = {};
@@ -87,7 +76,6 @@ jQuery(document).ready(function($) {
      promesaCarga.success(function (data) {
      for(var i = 0; i< data.length; i++){
      console.log(data[i]);
-
      var id = data[i].id;
      var dni = data[i].dni;
      var nombre=  data[i].nombre;
@@ -105,24 +93,24 @@ jQuery(document).ready(function($) {
      });
      */
     /*
-    function cargarAlumnos() {
-        var cantidad = dnies.length;
-        for (var i = 0; i < cantidad; i++) {
+     function cargarAlumnos() {
+     var cantidad = dnies.length;
+     for (var i = 0; i < cantidad; i++) {
      var id = '';
-            var dni = dnies[i];
-            var nombre = nombres[dni];
-            var apellido = apellidos[dni];
-            var notas = new Array();
-            notas['UF1841'] = nUF1841[dni];
-            notas['UF1842'] = nUF1842[dni];
-            notas['UF1843'] = nUF1843[dni];
-            notas['UF1844'] = nUF1844[dni];
-            notas['UF1845'] = nUF1845[dni];
-            notas['UF1846'] = nUF1846[dni];
+     var dni = dnies[i];
+     var nombre = nombres[dni];
+     var apellido = apellidos[dni];
+     var notas = new Array();
+     notas['UF1841'] = nUF1841[dni];
+     notas['UF1842'] = nUF1842[dni];
+     notas['UF1843'] = nUF1843[dni];
+     notas['UF1844'] = nUF1844[dni];
+     notas['UF1845'] = nUF1845[dni];
+     notas['UF1846'] = nUF1846[dni];
      insertarAlumnoTabla(id,dni, nombre, apellido, notas);
-        }
-        mostrarNAlumnos();
-    }
+     }
+     mostrarNAlumnos();
+     }
      */
     $('#listado-alumnos').find("tbody button").click(function (e) {
         e.preventDefault();
@@ -241,10 +229,10 @@ jQuery(document).ready(function($) {
             /*
              notas[] = ;
              notas[] = ;
-            notas['UF1843'] = nuf1843;
-            notas['UF1844'] = nuf1844;
-            notas['UF1845'] = nuf1845;
-            notas['UF1846'] = nuf1846;
+             notas['UF1843'] = nuf1843;
+             notas['UF1844'] = nuf1844;
+             notas['UF1845'] = nuf1845;
+             notas['UF1846'] = nuf1846;
              */
             datos = {nombre: nombre, apellidos: apellido, dni: dni, notas: notas};
             console.log(datos);
@@ -303,17 +291,17 @@ jQuery(document).ready(function($) {
     })
 });
 /*
-function addAlumno(dni, nombre, apellido, notas) {
-    dnies.push(dni);
-    nombres[dni] = nombre;
-    apellidos.push(dni, apellido);
-    nUF1841.push(dni, notas['UF1841']);
-    nUF1842.push(dni, notas['UF1842']);
-    nUF1843.push(dni, notas['UF1843']);
-    nUF1844.push(dni, notas['UF1844']);
-    nUF1845.push(dni, notas['UF1845']);
-    nUF1846.push(dni, notas['UF1846']);
-}
+ function addAlumno(dni, nombre, apellido, notas) {
+ dnies.push(dni);
+ nombres[dni] = nombre;
+ apellidos.push(dni, apellido);
+ nUF1841.push(dni, notas['UF1841']);
+ nUF1842.push(dni, notas['UF1842']);
+ nUF1843.push(dni, notas['UF1843']);
+ nUF1844.push(dni, notas['UF1844']);
+ nUF1845.push(dni, notas['UF1845']);
+ nUF1846.push(dni, notas['UF1846']);
+ }
  */
 function calcularLetra(numero){
     var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
@@ -322,31 +310,31 @@ function calcularLetra(numero){
     return letraCalculada;
 }
 /*
-function borradoBBDD(codigo) {
-    var i = 0;
-    var len = dnies.length;
-    var found = false;
-    var pos = -1;
-    while (i < len && found == false) {
-        if (codigo == dnies[i]) {
-            found = true;
-            pos = i;
-        }
-        i++;
-    }
-    if (pos != -1) {
-        dnies.splice(pos, 1);
-        delete nombres[codigo];
-        delete apellidos[codigo];
-        delete nUF1841[codigo];
-        delete nUF1842[codigo];
-        delete nUF1843[codigo];
-        delete nUF1844[codigo];
-        delete nUF1845[codigo];
-        delete nUF1846[codigo];
-        //....
-    }
-}
+ function borradoBBDD(codigo) {
+ var i = 0;
+ var len = dnies.length;
+ var found = false;
+ var pos = -1;
+ while (i < len && found == false) {
+ if (codigo == dnies[i]) {
+ found = true;
+ pos = i;
+ }
+ i++;
+ }
+ if (pos != -1) {
+ dnies.splice(pos, 1);
+ delete nombres[codigo];
+ delete apellidos[codigo];
+ delete nUF1841[codigo];
+ delete nUF1842[codigo];
+ delete nUF1843[codigo];
+ delete nUF1844[codigo];
+ delete nUF1845[codigo];
+ delete nUF1846[codigo];
+ //....
+ }
+ }
  */
 function calcularMedia(numeros) {
     var media = 0;
