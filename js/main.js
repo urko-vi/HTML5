@@ -69,7 +69,7 @@ jQuery(document).ready(function($) {
     ajax({url: URL, type: "GET"})
         .then(cargarAlumnos, recogerErrorAjax)
         .catch(function errorHandler(error) {
-
+            alert(error);
         });
     //  var promesaCarga = $.ajax('http://localhost:2403/alumnos',{type: "GET"});
     /*
