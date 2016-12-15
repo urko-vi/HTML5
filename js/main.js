@@ -46,11 +46,9 @@ jQuery(document).ready(function($) {
                 valor += nota;
                 n++;
             }
-
-
         });
         media = valor / n;
-        //  console.log(media+"-"+valor+"-"+n);
+
         $("#listado-alumnos").find("tfoot tr td:eq(1)").text(media.toFixed(2))
     }
 
@@ -102,7 +100,7 @@ jQuery(document).ready(function($) {
         .then(mostrarNAlumnos)
         .then(calcularMediaClase)
         .catch(function errorHandler(error) {
-            alert(error);
+            cargarMensaje(error.toString());
         });
     function datosToModal(alumno) {
         $("input#id").val(alumno.id);
@@ -119,7 +117,6 @@ jQuery(document).ready(function($) {
     }
     $('#listado-alumnos').find('tbody').on("click", "button", function (e) {
         e.preventDefault();
-        // alert("HAs pulsado en editar con ON");
         var id = $(this).parent().siblings("td").find("input").val();
         ajax({url: URL, type: "GET", data: {id: id}})
             .then(function (data) {
@@ -128,15 +125,12 @@ jQuery(document).ready(function($) {
                 $("#myModal").css("display", "block");
             })
             .catch(function errorHandler(error) {
-                alert(error);
+                cargarMensaje(error.toString());
             });
 
 
     });
     $("#listado-alumnos thead input").click(function (e) {
-        // $("#listado-alumnos tbody input[type='checkbox']").checked(true);
-        //attr vs (prop e is) ---> tiempo de carga
-        // prop vs is ---> prop identifica elementos cargados dinamicamente mientras is no
         var $input = $("#listado-alumnos").find('tbody input');
         if ($(this).prop("checked")) {
             $input.prop("checked", true);
@@ -195,7 +189,6 @@ jQuery(document).ready(function($) {
         if (media != '') {
             media = media.toFixed(2);
         }
-
         $td.find("td:nth-child(2)").text(alumno.nombre);
         $td.find("td:nth-child(3)").text(alumno.apellidos);
         $td.find("td:nth-child(4)").text(alumno.notas.UF1841);
@@ -229,7 +222,6 @@ jQuery(document).ready(function($) {
                     .then(function (data) {
                         var datos = parseData(data);
                         updateTable(datos);
-                        //     console.log(datos)
                     })
                     .then(cargarMensaje("El alumno ha sido Guardado"))
                     .then(calcularMediaClase)
