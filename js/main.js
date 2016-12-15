@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
         datos.nombre = data.nombre;
         datos.dni = data.dni;
         datos.apellidos = data.apellidos;
-
+        datos.fNacimiento = data.fNacimiento;
         datos.notas = {};
 
         if (typeof data.notas !== 'undefined') {
@@ -103,17 +103,18 @@ jQuery(document).ready(function($) {
         .catch(function errorHandler(error) {
             alert(error);
         });
-    function datosToModal(datos) {
-        $("input#id").val(datos.id);
-        $("input#dni").val(datos.dni);
-        $("input#nombre").val(datos.nombre);
-        $("input#apellidos").val(datos.apellidos);
-        $("input#nuf1841").val(datos.notas.UF1841);
-        $("input#nuf1842").val(datos.notas.UF1842);
-        $("input#nuf1843").val(datos.notas.UF1843);
-        $("input#nuf1844").val(datos.notas.UF1844);
-        $("input#nuf1845").val(datos.notas.UF1845);
-        $("input#nuf1846").val(datos.notas.UF1846);
+    function datosToModal(alumno) {
+        $("input#id").val(alumno.id);
+        $("input#dni").val(alumno.dni);
+        $("input#nombre").val(alumno.nombre);
+        $("input#apellidos").val(alumno.apellidos);
+        $("input#fNacimiento").val(alumno.fNacimiento);
+        $("input#nuf1841").val(alumno.notas.UF1841);
+        $("input#nuf1842").val(alumno.notas.UF1842);
+        $("input#nuf1843").val(alumno.notas.UF1843);
+        $("input#nuf1844").val(alumno.notas.UF1844);
+        $("input#nuf1845").val(alumno.notas.UF1845);
+        $("input#nuf1846").val(alumno.notas.UF1846);
     }
     $('#listado-alumnos').find('tbody').on("click", "button", function (e) {
         e.preventDefault();
@@ -175,6 +176,7 @@ jQuery(document).ready(function($) {
         datos.dni = $("#dni").val();
         datos.nombre = $("#nombre").val();
         datos.apellidos = $("#apellidos").val();
+        datos.fNacimiento = $("#fNacimiento").val();
         datos.notas = {};
         datos.notas.UF1841 = parseInt($("#nuf1841").val()) || '';
         datos.notas.UF1842 = parseInt($("#nuf1842").val()) || '';
