@@ -38,18 +38,19 @@ jQuery(document).ready(function($) {
     function calcularMediaClase() {
         var valor = 0;
         var media = 0;
-
+        var n = 0;
         $('#listado-alumnos').find(".media").each(function () {
-            var nota = parseInt($(this).text()) || -1;
+            var nota = parseFloat($(this).text()) || -1;
+            console.log(nota);
             if (nota > -1) {
                 valor += nota;
-                media++;
+                n++;
             }
 
 
         });
-        media = valor / media;
-
+        media = valor / n;
+        //  console.log(media+"-"+valor+"-"+n);
         $("#listado-alumnos").find("tfoot tr td:eq(1)").text(media.toFixed(2))
     }
 
@@ -312,6 +313,10 @@ function calcularMedia(numeros) {
 
 
     return media;
+}
+function validarFechaNacimiento(fecha) {
+    var date = new Date();
+    return true;
 }
 function validarDNI(dni) {
     var REGEX = /^\d{8}[a-zA-Z]$/;// \d ==> [0-9]
