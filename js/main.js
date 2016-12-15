@@ -150,15 +150,15 @@ jQuery(document).ready(function($) {
         $("#myModal").css("display", "block");
     });
     //borrar
-    $("#alumnos div button.btn-danger").on("click", function (e) {
+    $("#alumnos").find("div button.btn-danger").on("click", function (e) {
         e.preventDefault();
         var nAlumnosborrados = 0;
         //0 Recoger el dni de la vista
-        $("#listado-alumnos tbody input:checked").each(function (e) {
+        $("#listado-alumnos tbody input:checked").each(function () {
             var codigo = $(this).val();
             ajax({url: URL, type: "DELETE", data: {id: codigo}})
                 .catch(function errorHandler(error) {
-                    alert(error.toString());
+                    cargarMensaje(error.toString());
                 });
             nAlumnosborrados += 1;
         });
@@ -209,6 +209,7 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var alumno = modalToData();
         if (validarAlumno(alumno)) {
+            var mensaje = "";
             if (alumno.id == "") {//create
                 ajax({url: URL, type: "POST", data: alumno})
                     .then(function (data) {
@@ -219,7 +220,7 @@ jQuery(document).ready(function($) {
                     .then(mostrarNAlumnos(1))
                     .then(calcularMediaClase)
                     .catch(function errorHandler(error) {
-                        alert(error.toString());
+                        cargarMensaje(error.toString());
                     });
 
             } else {//update
@@ -232,7 +233,7 @@ jQuery(document).ready(function($) {
                     .then(cargarMensaje("El alumno ha sido Guardado"))
                     .then(calcularMediaClase)
                     .catch(function errorHandler(error) {
-                        alert(error.toString())
+                        cargarMensaje(error.toString());
                     });
             }
             $("#myModal").css("display", "none");
@@ -293,7 +294,7 @@ function calcularLetra(numero){
 }
 function calcularMedia(numeros) {
     var media = 0;
-    var len = numeros.length
+    var len = numeros.length;
     var i = 0;
     var count = 0;
     while (i < len) {
