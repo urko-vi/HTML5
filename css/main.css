@@ -627,6 +627,9 @@ table {
     border-collapse: collapse;
 }
 
+#listado-alumnos .media {
+    font-weight: bold;
+}
 /* Zebra striping */
 tr:nth-of-type(odd) {
     background: #eee;
@@ -647,8 +650,13 @@ th {
 tfoot td {
     text-align: left;
     color: black;
+    font-weight: bold;
 }
 
+tfoot td:nth-child(2) {
+    text-align: center;
+
+}
 tbody tr {
     color: black;
 }
