@@ -11,23 +11,17 @@ jQuery(document).ready(function($) {
     function getPreciseLocation() {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                console.log(position.coords.latitude)
                 resolve({latitude: position.coords.latitude, longitude: position.coords.longitude});
             });
         });
     }
 
-    /*
-
-     *&callback=initMap
-
-     */
     function cargarMapa(coordenadas) {
         console.log(coordenadas)
         var element = document.getElementById('mapa');
         var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
         var mapOptions = {
-            center: new google.maps.LatLng(lat, lon),
+            center: new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude),
             zoom: 13
         };
         var infowindow = new google.maps.InfoWindow({
