@@ -7,7 +7,6 @@ jQuery(document).ready(function($) {
             $.ajax(opciones).done(resolve).fail(reject);
         });
     }
-
     function getPreciseLocation() {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -22,7 +21,7 @@ jQuery(document).ready(function($) {
         var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
         var mapOptions = {
             center: new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude),
-            zoom: 13
+            zoom: 14
         };
         var infowindow = new google.maps.InfoWindow({
             content: "Aqui estamos."
@@ -67,7 +66,7 @@ jQuery(document).ready(function($) {
 
     function calcularMediaClase() {
         var valor = 0;
-        var media = 0;
+        var media;
         var n = 0;
         $('#listado-alumnos').find(".media").each(function () {
             var nota = parseFloat($(this).text()) || -1;
@@ -92,16 +91,6 @@ jQuery(document).ready(function($) {
     function cargarMensaje(mensaje) {
         alert(mensaje);
     }
-
-    /*
-    function recogerErrorAjax(jqXHR, textStatus, errorThrown) {
-        alert("Error:" + jqXHR.toString() + textStatus + errorThrown);
-    }
-
-     function parseAlumno(data) {
-
-     }
-     */
     function datosToHTML(datos) {
         var media = calcularMedia([datos.notas['UF1841'], datos.notas['UF1842'], datos.notas['UF1843'], datos.notas['UF1844'], datos.notas['UF1845'], datos.notas['UF1846']]);
         if (media != '') {
@@ -230,7 +219,7 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var alumno = modalToData();
         if (validarAlumno(alumno)) {
-            var mensaje = "";
+
             if (alumno.id == "") {//create
                 ajax({url: URL, type: "POST", data: alumno})
                     .then(function (data) {
@@ -342,7 +331,7 @@ function validarFechaNacimiento(fecha) {
     const mayor = 18;
     var age = date.getFullYear() - dof.getFullYear();
     console.log(age);
-    if (age >= 18 && age < 65) {
+    if (age >= mayor && age < jubilacion) {
         valido = true;
     }
     return valido;
