@@ -23,7 +23,8 @@ jQuery(document).ready(function($) {
         var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
         var mapOptions = {
             center: new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude),
-            zoom: 14
+            zoom: 14,
+            scrollwheel: false
         };
         var infowindow = new google.maps.InfoWindow({
             content: "Aqui estamos."
@@ -151,7 +152,7 @@ jQuery(document).ready(function($) {
     });
     $tabla.find("thead input").click(function (e) {
         e.preventDefault();
-        var $input = $("#listado-alumnos").find('tbody input');
+        var $input = $tabla.find('tbody input');
         if ($(this).prop("checked")) {
             $input.prop("checked", true);
         } else {
@@ -162,6 +163,7 @@ jQuery(document).ready(function($) {
     $seccionAlumno.find('div button.btn-info').on("click", function (e) {
         e.preventDefault();
         $('#formAlumno').find('input').val("");
+        $('#formAlumno').find(".error").text('');
         $("#myModal").css("display", "block");
     });
     //borrar
@@ -169,7 +171,7 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var nAlumnosborrados = 0;
         //0 Recoger el dni de la vista
-        $("#listado-alumnos").find("tbody input:checked").each(function () {
+        $tabla.find("tbody input:checked").each(function () {
             var codigo = $(this).val();
             ajax({url: URL, type: "DELETE", data: {id: codigo}})
                 .catch(function errorHandler(error) {
@@ -203,7 +205,7 @@ jQuery(document).ready(function($) {
     }
 
     function updateTable(alumno) {
-        var $td = $('#listado-alumnos').find("tbody input[value='" + alumno.id + "']").parents("tr");
+        var $td = $tabla.find("tbody input[value='" + alumno.id + "']").parents("tr");
 
         var media = calcularMedia([alumno.notas['UF1841'], alumno.notas['UF1842'], alumno.notas['UF1843'], alumno.notas['UF1844'], alumno.notas['UF1845'], alumno.notas['UF1846']]);
         if (media != '') {
@@ -257,51 +259,61 @@ jQuery(document).ready(function($) {
     function mostrarNAlumnos(longitud) {
         longitud = typeof longitud === 'undefined' ? 0 : longitud;
         nAlumno += longitud;
-        $('#alumnos').find('div span:eq(0)').text("Número de Alumnos: " + nAlumno);
+        $seccionAlumno.find('div span:eq(0)').text("Número de Alumnos: " + nAlumno);
     }
     function borradoVista() {
-        $('#listado-alumnos').find('tbody tr input:checked').parents('tr').remove();
+        $tabla.find('tbody tr input:checked').parents('tr').remove();
     }
     $("#formAlumno").submit(function (e) {
         e.preventDefault();
         return false;
     })
+    function validarAlumno(alumno) {
+        var valido = true;
+        if (!validarDNI(alumno.dni)) {
+            // mensajes de error
+            valido = false;
+            $("#dni").siblings("p.error").text("Dni incorrecto");
+        }
+        if (!validarFechaNacimiento(alumno.fNacimiento)) {
+            valido = false;
+            $("#fNacimiento").siblings("p.error").text("Fecha de Nacimiento no valida");
+        }
+        if (!validarTexto(alumno.nombre, 3)) {
+            valido = false;
+            $("#nombre").siblings("p.error").text("Nombre no valido");
+        }
+        if (!validarTexto(alumno.apellidos, 7)) {
+            valido = false;
+            $("#apellidos").siblings("p.error").text("Apellido no valido");
+        }
+        if (!validarNotas(alumno.notas.UF1841)) {
+            valido = false;
+            $("#nuf1841").siblings("p.error").text("Nota no valida");
+        }
+        if (!validarNotas(alumno.notas.UF1842)) {
+            valido = false;
+            $("#nuf1842").siblings("p.error").text("Nota no valida");
+        }
+        if (!validarNotas(alumno.notas.UF1843)) {
+            valido = false;
+            $("#nuf1843").siblings("p.error").text("Nota no valida");
+        }
+        if (!validarNotas(alumno.notas.UF1844)) {
+            valido = false;
+            $("#nuf1844").siblings("p.error").text("Nota no valida");
+        }
+        if (!validarNotas(alumno.notas.UF1845)) {
+            valido = false;
+            $("#nuf1845").siblings("p.error").text("Nota no valida");
+        }
+        if (!validarNotas(alumno.notas.UF1846)) {
+            valido = false;
+            $("#nuf1846").siblings("p.error").text("Nota no valida");
+        }
+        return valido;
+    }
 });
-function validarAlumno(alumno) {
-    var valido = true;
-    if (!validarDNI(alumno.dni)) {
-        // mensajes de error
-        valido = false;
-    }
-    if (!validarFechaNacimiento(alumno.fNacimiento)) {
-        valido = false;
-    }
-    if (!validarTexto(alumno.nombre, 3)) {
-        valido = false;
-    }
-    if (!validarTexto(alumno.apellidos, 7)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1841)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1842)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1843)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1844)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1845)) {
-        valido = false;
-    }
-    if (!validarNotas(alumno.notas.UF1846)) {
-        valido = false;
-    }
-    return valido;
-}
 function calcularLetra(numero){
     var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
     var letraCalculada;
@@ -329,13 +341,18 @@ function calcularMedia(numeros) {
 }
 function validarFechaNacimiento(fecha) {
     var valido = false;
-    var date = new Date();
-    var dof = new Date(fecha);
-    const jubilacion = 65;
-    const mayor = 18;
-    var age = date.getFullYear() - dof.getFullYear();
-    console.log(age);
-    if (age >= mayor && age < jubilacion) {
+    if (fecha != "") {
+        var date = new Date();
+        var dof = new Date(fecha);
+
+        const jubilacion = 65;
+        const mayor = 18;
+        var age = date.getFullYear() - dof.getFullYear();
+        console.log(age);
+        if (age >= mayor && age < jubilacion) {
+            valido = true;
+        }
+    } else {
         valido = true;
     }
     return valido;
