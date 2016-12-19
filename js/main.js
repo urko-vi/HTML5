@@ -41,14 +41,12 @@ jQuery(document).ready(function($) {
         var n = 0;
         $('#listado-alumnos').find(".media").each(function () {
             var nota = parseFloat($(this).text()) || -1;
-            console.log(nota);
             if (nota > -1) {
                 valor += nota;
                 n++;
             }
         });
         media = valor / n;
-
         $("#listado-alumnos").find("tfoot tr td:eq(1)").text(media.toFixed(2))
     }
 
@@ -59,7 +57,6 @@ jQuery(document).ready(function($) {
             datosToHTML(datos);
         }
         nAlumno = data.length;
-
     }
 
     function cargarMensaje(mensaje) {
@@ -100,7 +97,7 @@ jQuery(document).ready(function($) {
         .then(mostrarNAlumnos)
         .then(calcularMediaClase)
         .catch(function errorHandler(error) {
-            cargarMensaje(error.toString());
+            console.log(error);
         });
     function datosToModal(alumno) {
         $("input#id").val(alumno.id);
@@ -125,7 +122,7 @@ jQuery(document).ready(function($) {
                 $("#myModal").css("display", "block");
             })
             .catch(function errorHandler(error) {
-                cargarMensaje(error.toString());
+                console.log(error);
             });
 
 
@@ -153,7 +150,7 @@ jQuery(document).ready(function($) {
             var codigo = $(this).val();
             ajax({url: URL, type: "DELETE", data: {id: codigo}})
                 .catch(function errorHandler(error) {
-                    cargarMensaje(error.toString());
+                    console.log(error);
                 });
             nAlumnosborrados += 1;
         });
@@ -184,7 +181,7 @@ jQuery(document).ready(function($) {
 
     function updateTable(alumno) {
         var $td = $('#listado-alumnos').find("tbody input[value='" + alumno.id + "']").parents("tr");
-        console.log($td);
+
         var media = calcularMedia([alumno.notas['UF1841'], alumno.notas['UF1842'], alumno.notas['UF1843'], alumno.notas['UF1844'], alumno.notas['UF1845'], alumno.notas['UF1846']]);
         if (media != '') {
             media = media.toFixed(2);
@@ -214,7 +211,7 @@ jQuery(document).ready(function($) {
                     .then(mostrarNAlumnos(1))
                     .then(calcularMediaClase)
                     .catch(function errorHandler(error) {
-                        cargarMensaje(error.toString());
+                        console.log(error);
                     });
 
             } else {//update
@@ -251,6 +248,9 @@ function validarAlumno(alumno) {
     var valido = true;
     if (!validarDNI(alumno.dni)) {
         // mensajes de error
+        valido = false;
+    }
+    if (!validarFechaNacimiento(alumno.fNacimiento)) {
         valido = false;
     }
     if (!validarTexto(alumno.nombre, 3)) {
@@ -302,13 +302,20 @@ function calcularMedia(numeros) {
     } else {
         media = '';
     }
-
-
     return media;
 }
 function validarFechaNacimiento(fecha) {
+    var valido = false;
     var date = new Date();
-    return true;
+    var dof = new Date(fecha);
+    const jubilacion = 65;
+    const mayor = 18;
+    var age = date.getFullYear() - dof.getFullYear();
+    console.log(age);
+    if (age >= 18 && age < 65) {
+        valido = true;
+    }
+    return valido;
 }
 function validarDNI(dni) {
     var REGEX = /^\d{8}[a-zA-Z]$/;// \d ==> [0-9]

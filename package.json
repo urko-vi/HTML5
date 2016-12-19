@@ -1,0 +1,18 @@
+{
+    "name": "gestion-alumnos",
+    "version": "1.0.0",
+    "description": "Example showing how to set up Babel 6 in WebStorm",
+    "main": "js/main.js",
+    "author": "Garrett McCullough",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/gwmccull/babel-6-example/issues"
+    },
+    "homepage": "https://github.com/gwmccull/babel-6-example#readme",
+    "devDependencies": {
+        "babel-preset-es2015": "^6.3.13",
+        "grunt": "^1.0.1",
+        "grunt-babel": "^6.0.0",
+        "load-grunt-tasks": "^3.5.2"
+    }
+}

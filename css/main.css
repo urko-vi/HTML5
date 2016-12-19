@@ -595,6 +595,10 @@ main > section {
     color: #fff;
     box-sizing: border-box;
 }
+
+main #mapa {
+    color: black;
+}
 main > section div.flexcontainer{
     justify-content: center;
 }
