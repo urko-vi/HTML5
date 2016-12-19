@@ -268,9 +268,11 @@ jQuery(document).ready(function($) {
     function borradoVista() {
         $tabla.find('tbody tr input:checked').parents('tr').remove();
     }
-    $("#formAlumno").submit(function (e) {
+
+    $formAlumno.submit(function (e) {
         e.preventDefault();
-    })
+        return false;
+    });
     function validarAlumno(alumno) {
         var valido = true;
         if (!validarDNI(alumno.dni)) {
