@@ -8,6 +8,42 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function getPreciseLocation() {
+        return new Promise(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log(position.coords.latitude)
+                resolve({latitude: position.coords.latitude, longitude: position.coords.longitude});
+            });
+        });
+    }
+
+    /*
+
+     *&callback=initMap
+
+     */
+    function cargarMapa(coordenadas) {
+        console.log(coordenadas)
+        var element = document.getElementById('mapa');
+        var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
+        var mapOptions = {
+            center: new google.maps.LatLng(lat, lon),
+            zoom: 13
+        };
+        var infowindow = new google.maps.InfoWindow({
+            content: "Aqui estamos."
+        });
+        var map = new google.maps.Map(element, mapOptions);
+        var marker = new google.maps.Marker({position: myCenter});
+        marker.setMap(map);
+        infowindow.open(map, marker);
+    }
+
+    getPreciseLocation()
+        .then(cargarMapa)
+        .catch(function errorHandler(error) {
+            console.log(error);
+        });
     function parseData(data) {
         var datos = {};
         datos.id = data.id;
