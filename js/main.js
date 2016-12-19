@@ -2,6 +2,8 @@ $.noConflict();
 const URL = "http://localhost:2403/alumnos";
 var nAlumno = 0;
 jQuery(document).ready(function($) {
+    var $tabla = $('#listado-alumnos');
+    var $seccionAlumno = $("#alumnos");
     function ajax(opciones) {
         return new Promise(function (resolve, reject) {
             $.ajax(opciones).done(resolve).fail(reject);
@@ -16,7 +18,7 @@ jQuery(document).ready(function($) {
     }
 
     function cargarMapa(coordenadas) {
-        console.log(coordenadas)
+        console.log(coordenadas);
         var element = document.getElementById('mapa');
         var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
         var mapOptions = {
@@ -68,7 +70,7 @@ jQuery(document).ready(function($) {
         var valor = 0;
         var media;
         var n = 0;
-        $('#listado-alumnos').find(".media").each(function () {
+        $tabla.find(".media").each(function () {
             var nota = parseFloat($(this).text()) || -1;
             if (nota > -1) {
                 valor += nota;
@@ -76,7 +78,7 @@ jQuery(document).ready(function($) {
             }
         });
         media = valor / n;
-        $("#listado-alumnos").find("tfoot tr td:eq(1)").text(media.toFixed(2))
+        $tabla.find("tfoot tr td:eq(1)").text(media.toFixed(2))
     }
 
     function cargarAlumnos(data) {
@@ -109,7 +111,7 @@ jQuery(document).ready(function($) {
             "<td class='media'>" + media + "</td>" +
             "<td align='center'><button>Editar</button></td>" +
             "</tr>";
-        $('#listado-alumnos').find('tbody').append(html_text);
+        $tabla.find('tbody').append(html_text);
     }
     ajax({url: URL, type: "GET"})
         .then(cargarAlumnos)
@@ -131,7 +133,8 @@ jQuery(document).ready(function($) {
         $("input#nuf1845").val(alumno.notas.UF1845);
         $("input#nuf1846").val(alumno.notas.UF1846);
     }
-    $('#listado-alumnos').find('tbody').on("click", "button", function (e) {
+
+    $tabla.find('tbody').on("click", "button", function (e) {
         e.preventDefault();
         var id = $(this).parent().siblings("td").find("input").val();
         ajax({url: URL, type: "GET", data: {id: id}})
@@ -146,7 +149,8 @@ jQuery(document).ready(function($) {
 
 
     });
-    $("#listado-alumnos thead input").click(function (e) {
+    $tabla.find("thead input").click(function (e) {
+        e.preventDefault();
         var $input = $("#listado-alumnos").find('tbody input');
         if ($(this).prop("checked")) {
             $input.prop("checked", true);
@@ -155,17 +159,17 @@ jQuery(document).ready(function($) {
         }
     });
     //añadir
-    $("#alumnos").find('div button.btn-info').on("click", function (e) {
+    $seccionAlumno.find('div button.btn-info').on("click", function (e) {
         e.preventDefault();
         $('#formAlumno').find('input').val("");
         $("#myModal").css("display", "block");
     });
     //borrar
-    $("#alumnos").find("div button.btn-danger").on("click", function (e) {
+    $seccionAlumno.find("div button.btn-danger").on("click", function (e) {
         e.preventDefault();
         var nAlumnosborrados = 0;
         //0 Recoger el dni de la vista
-        $("#listado-alumnos tbody input:checked").each(function () {
+        $("#listado-alumnos").find("tbody input:checked").each(function () {
             var codigo = $(this).val();
             ajax({url: URL, type: "DELETE", data: {id: codigo}})
                 .catch(function errorHandler(error) {
