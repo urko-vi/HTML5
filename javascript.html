@@ -172,56 +172,6 @@
         -->
     </div>
 </div>
-<style>
-    #mapa {
-        height: 500px;
-        width: 100%;
-    }
-</style>
-<script>
-    function initMap() {
-        var lon = 0;
-        var lat = 0;
-        navigator.geolocation.getCurrentPosition(function (objPosition) {
-            lon = objPosition.coords.longitude;
-            lat = objPosition.coords.latitude;
-            console.log(lon + " " + lat);
-            var element = document.getElementById('mapa');
-            var myCenter = new google.maps.LatLng(lat, lon);
-            var mapOptions = {
-                center: new google.maps.LatLng(lat, lon),
-                zoom: 13
-            };
-            var infowindow = new google.maps.InfoWindow({
-                content: "Aqui estamos."
-            });
-            var map = new google.maps.Map(element, mapOptions);
-            var marker = new google.maps.Marker({position: myCenter});
-            marker.setMap(map);
-            infowindow.open(map, marker);
-
-        }, function (objPositionError) {
-            switch (objPositionError.code) {
-                case objPositionError.PERMISSION_DENIED:
-
-                    break;
-                case objPositionError.POSITION_UNAVAILABLE:
-
-                    break;
-                case objPositionError.TIMEOUT:
-
-                    break;
-                default:
-
-            }
-        }, {
-            maximumAge: 75000,
-            timeout: 15000
-        });
-
-
-    }
-</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVQIzu1Kcx_NNQYuJEXwCn8w3aDWYfKWo"
         async defer></script>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

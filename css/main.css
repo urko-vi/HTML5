@@ -598,6 +598,9 @@ main > section {
 
 main #mapa {
     color: black;
+    min-height: 500px;
+    width: 100%;
+
 }
 main > section div.flexcontainer{
     justify-content: center;
