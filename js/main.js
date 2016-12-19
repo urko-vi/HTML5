@@ -4,6 +4,8 @@ var nAlumno = 0;
 jQuery(document).ready(function($) {
     var $tabla = $('#listado-alumnos');
     var $seccionAlumno = $("#alumnos");
+    var $formAlumno = $('#formAlumno');
+    var $modal = $('#myModal');
     function ajax(opciones) {
         return new Promise(function (resolve, reject) {
             $.ajax(opciones).done(resolve).fail(reject);
@@ -142,7 +144,7 @@ jQuery(document).ready(function($) {
             .then(function (data) {
                 var datos = parseData(data);
                 datosToModal(datos);
-                $("#myModal").css("display", "block");
+                $modal.css("display", "block");
             })
             .catch(function errorHandler(error) {
                 console.log(error);
@@ -162,9 +164,9 @@ jQuery(document).ready(function($) {
     //añadir
     $seccionAlumno.find('div button.btn-info').on("click", function (e) {
         e.preventDefault();
-        $('#formAlumno').find('input').val("");
-        $('#formAlumno').find(".error").text('');
-        $("#myModal").css("display", "block");
+        $formAlumno.find('input').val("");
+        $formAlumno.find(".error").text('');
+        $modal.css("display", "block");
     });
     //borrar
     $seccionAlumno.find("div button.btn-danger").on("click", function (e) {
@@ -183,9 +185,10 @@ jQuery(document).ready(function($) {
         calcularMediaClase();
         mostrarNAlumnos(-nAlumnosborrados);
     });
+    // $modal.find("")
     $("#myModal button.btn-info,#myModal .close").click(function (e) {
         e.preventDefault();
-        $("#myModal").css("display", "none");
+        $modal.css("display", "none");
     });
     function modalToData() {
         var datos = {};
@@ -221,7 +224,8 @@ jQuery(document).ready(function($) {
         $td.find("td:nth-child(9)").text(alumno.notas.UF1846);
         $td.find("td:nth-child(10)").text(media);
     }
-    $('#myModal').find(".btn-success").on("click", function (e) {
+
+    $modal.find(".btn-success").on("click", function (e) {
         e.preventDefault();
         var alumno = modalToData();
         if (validarAlumno(alumno)) {
@@ -251,7 +255,7 @@ jQuery(document).ready(function($) {
                         cargarMensaje(error.toString());
                     });
             }
-            $("#myModal").css("display", "none");
+            $modal.css("display", "none");
         } else {
             console.log("tiene errores");
         }
@@ -266,7 +270,6 @@ jQuery(document).ready(function($) {
     }
     $("#formAlumno").submit(function (e) {
         e.preventDefault();
-        return false;
     })
     function validarAlumno(alumno) {
         var valido = true;
