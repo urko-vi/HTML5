@@ -2,9 +2,6 @@
 $.noConflict();
 const URL = "http://localhost:2403/alumnos";
 var nAlumno = 0;
-var start = "";
-var end = "";
-
 jQuery(document).ready(function($) {
     var $tabla = $('#listado-alumnos');
     var $seccionAlumno = $("#alumnos");
