@@ -23,7 +23,26 @@ jQuery(document).ready(function($) {
 
     function getMapData() {//recoger los datos de empiece fin, modo de direcciones y del mapa
         return new Promise(function (resolve, reject) {
-
+            navigator.geolocation.getCurrentPosition(function (position) {
+                //    var start = {latitude:'',longitude:''};
+                var end = {latitude: position.coords.latitude, longitude: position.coords.longitude};
+                var geocoder = new google.maps.Geocoder();
+                var address = 'Calle Gran Via 85, Bilbao, Bizkaia, España';
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location
+                        });
+                        console.log(results[0].geometry.location);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+                var results = {start: start, end: end};
+                resolve(results);
+            });
         });
     }
 
@@ -32,13 +51,25 @@ jQuery(document).ready(function($) {
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var element = document.getElementById('mapa');
         var end = new google.maps.LatLng(results.latitude, results.longitude);
+        console.log(results.latitude, results.longitude);
         var start = new google.maps.LatLng(43.2630126, -2.9349852000000283);
         var mapOptions = {center: end, zoom: 14, scrollwheel: false};
         var map = new google.maps.Map(element, mapOptions);
-        var infowindow = new google.maps.InfoWindow({
-            content: "Aqui estamos."
+        var geocoder = new google.maps.Geocoder();
+        var address = 'Calle Gran Via 85, Bilbao, Bizkaia, España';
+        geocoder.geocode({'address': address}, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+                // console.log(results[0].geometry.location);
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
         });
-        var marker = new google.maps.Marker({position: end});
+
 
         var request = {
             origin: start,
@@ -47,7 +78,7 @@ jQuery(document).ready(function($) {
         };
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('panel'));
-        infowindow.open(map, marker);
+        // infowindow.open(map, marker);
         //noinspection JSUnresolvedFunction
         directionsService.route(request, function (response, status) {
             //noinspection JSUnresolvedVariable
