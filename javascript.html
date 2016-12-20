@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico in the root directory -->
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css?v=1.1">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="js/vendor/jquery-1.12.0.min.js"></script>
     <script src="js/plugins.js"></script>
-    <script src="js/main.js" ></script>
+    <script src="js/main.js?v=1.1"></script>
     <!-- -qxlvGE -->
 </head>
 <body>
@@ -33,6 +33,7 @@
         <ul class="navigation flexcontainer">
             <li><a href="#alumnos">alumnos</a></li>
             <li><a href="#localizacion">localización</a></li>
+            <li><a href="#estadisticas">estadisticas</a></li>
         </ul>
     </nav>
 </header>
@@ -42,7 +43,9 @@
         <div>
             <button class="btn btn-info">Añadir</button>
             <button class="btn btn-danger">Borrar</button>
+
             <span>Número de Alumnos</span>
+            <button class="btn btn-danger" id="ruta">Calcular Ruta</button>
         </div>
         <table id="listado-alumnos">
             <thead>
@@ -75,6 +78,11 @@
         <div id="mapa">
 
         </div>
+        <div id="panel">
+        </div>
+    </section>
+    <section id="estadisticas">
+        <header><h2>estadisticas</h2></header>
     </section>
 </main>
 <footer>

@@ -1,6 +1,10 @@
+"use strict";
 $.noConflict();
 const URL = "http://localhost:2403/alumnos";
 var nAlumno = 0;
+var start = "";
+var end = "";
+
 jQuery(document).ready(function($) {
     var $tabla = $('#listado-alumnos');
     var $seccionAlumno = $("#alumnos");
@@ -14,31 +18,100 @@ jQuery(document).ready(function($) {
     function getPreciseLocation() {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                resolve({latitude: position.coords.latitude, longitude: position.coords.longitude});
+                var results = {latitude: position.coords.latitude, longitude: position.coords.longitude};
+                resolve(results);
             });
         });
     }
 
-    function cargarMapa(coordenadas) {
-        console.log(coordenadas);
+    function getMapData() {//recoger los datos de empiece fin, modo de direcciones y del mapa
+        return new Promise(function (resolve, reject) {
+
+        });
+    }
+
+    function cargarMapa(results) {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
         var element = document.getElementById('mapa');
-        var myCenter = new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude);
-        var mapOptions = {
-            center: new google.maps.LatLng(coordenadas.latitude, coordenadas.longitude),
-            zoom: 14,
-            scrollwheel: false
-        };
+        var end = new google.maps.LatLng(results.latitude, results.longitude);
+        var start = new google.maps.LatLng(43.2630126, -2.9349852000000283);
+        var mapOptions = {center: end, zoom: 14, scrollwheel: false};
+        var map = new google.maps.Map(element, mapOptions);
         var infowindow = new google.maps.InfoWindow({
             content: "Aqui estamos."
         });
-        var map = new google.maps.Map(element, mapOptions);
-        var marker = new google.maps.Marker({position: myCenter});
-        marker.setMap(map);
+        var marker = new google.maps.Marker({position: end});
+
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.TRANSIT
+        };
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('panel'));
         infowindow.open(map, marker);
+        //noinspection JSUnresolvedFunction
+        directionsService.route(request, function (response, status) {
+            //noinspection JSUnresolvedVariable
+            if (status == google.maps.DirectionsStatus.OK) {
+                //noinspection JSUnresolvedFunction
+                directionsDisplay.setDirections(response);
+            } else {
+                console.log("error");
+            }
+        });
+    }
+
+    function calcularRutas(results) {
+        //var start = new google.maps.LatLng(43.2630126, -2.9349852000000283);
+        var map = results.map;
+        var start = results.start;
+        var end = results.end;
+        var mode = results.mode;//google.maps.DirectionsTravelMode.TRANSIT
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.TRANSIT
+        };
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('panel'));
+
+        //noinspection JSUnresolvedFunction
+        directionsService.route(request, function (response, status) {
+            //noinspection JSUnresolvedVariable
+            if (status == google.maps.DirectionsStatus.OK) {
+                //noinspection JSUnresolvedFunction
+                directionsDisplay.setDirections(response);
+            } else {
+                console.log("error");
+            }
+        });
+        /*
+         // return promise
+         return new Promise(function(resolve,reject){
+         //noinspection JSUnresolvedFunction
+         directionsService.route(request, function(results, status) {
+         //noinspection JSUnresolvedVariable
+         if (status == google.maps.places.PlacesServiceStatus.OK) {
+         // resolve promise with results on OK status
+         resolve(results);
+         }else {
+         reject(status);
+         }
+         });
+         });
+         */
     }
 
     getPreciseLocation()
         .then(cargarMapa)
+        /*
+         .then(function (results) {
+         //cargarDatosOrigenDestino
+         calcularRutas(results);
+         //calcularDestino(start,end);
+         })*/
         .catch(function errorHandler(error) {
             console.log(error);
         });
@@ -68,7 +141,6 @@ jQuery(document).ready(function($) {
         }
         return datos;
     }
-
     function calcularMediaClase() {
         var valor = 0;
         var media;
@@ -83,10 +155,9 @@ jQuery(document).ready(function($) {
         media = valor / n;
         $tabla.find("tfoot tr td:eq(1)").text(media.toFixed(2))
     }
-
     function cargarAlumnos(data) {
+        var datos = {};
         for (var i = 0; i < data.length; i++) {
-            var datos = {};
             datos = parseData(data[i]);
             datosToHTML(datos);
         }
@@ -136,7 +207,6 @@ jQuery(document).ready(function($) {
         $("input#nuf1845").val(alumno.notas.UF1845);
         $("input#nuf1846").val(alumno.notas.UF1846);
     }
-
     $tabla.find('tbody').on("click", "button", function (e) {
         e.preventDefault();
         var id = $(this).parent().siblings("td").find("input").val();
@@ -185,10 +255,13 @@ jQuery(document).ready(function($) {
         calcularMediaClase();
         mostrarNAlumnos(-nAlumnosborrados);
     });
+    function ocultarModal() {
+        $modal.css("display", "none");
+    }
     // $modal.find("")
     $("#myModal button.btn-info,#myModal .close").click(function (e) {
         e.preventDefault();
-        $modal.css("display", "none");
+        ocultarModal();
     });
     function modalToData() {
         var datos = {};
@@ -225,37 +298,42 @@ jQuery(document).ready(function($) {
         $td.find("td:nth-child(10)").text(media);
     }
 
+    function createAlumno(alumno) {
+        ajax({url: URL, type: "POST", data: alumno})
+            .then(function (data) {
+                var datos = parseData(data);
+                datosToHTML(datos);
+            })
+            .then(cargarMensaje("El alumno ha sido Creado"))
+            .then(mostrarNAlumnos(1))
+            .then(calcularMediaClase)
+            .catch(function errorHandler(error) {
+                console.log(error);
+            });
+    }
+
+    function updateAlumno(alumno) {
+        ajax({url: URL, type: "PUT", data: alumno})
+            .then(function (data) {
+                var datos = parseData(data);
+                updateTable(datos);
+            })
+            .then(cargarMensaje("El alumno ha sido Guardado"))
+            .then(calcularMediaClase)
+            .catch(function errorHandler(error) {
+                cargarMensaje(error.toString());
+            });
+    }
     $modal.find(".btn-success").on("click", function (e) {
         e.preventDefault();
         var alumno = modalToData();
         if (validarAlumno(alumno)) {
-
             if (alumno.id == "") {//create
-                ajax({url: URL, type: "POST", data: alumno})
-                    .then(function (data) {
-                        var datos = parseData(data);
-                        datosToHTML(datos);
-                    })
-                    .then(cargarMensaje("El alumno ha sido Creado"))
-                    .then(mostrarNAlumnos(1))
-                    .then(calcularMediaClase)
-                    .catch(function errorHandler(error) {
-                        console.log(error);
-                    });
-
+                createAlumno(alumno);
             } else {//update
-                ajax({url: URL, type: "PUT", data: alumno})
-                    .then(function (data) {
-                        var datos = parseData(data);
-                        updateTable(datos);
-                    })
-                    .then(cargarMensaje("El alumno ha sido Guardado"))
-                    .then(calcularMediaClase)
-                    .catch(function errorHandler(error) {
-                        cargarMensaje(error.toString());
-                    });
+                updateAlumno(alumno);
             }
-            $modal.css("display", "none");
+            ocultarModal();
         } else {
             console.log("tiene errores");
         }

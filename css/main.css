@@ -568,11 +568,9 @@ textarea:focus {
     background-color: #5cb85c;
     color: white;
 }
-
 .modal-body {
     padding: 2px 16px;
 }
-
 .modal-footer {
     padding: 2px 16px;
     background-color: #5cb85c;
@@ -602,6 +600,10 @@ main #mapa {
     width: 100%;
 
 }
+
+#panel .adp-directions {
+    background-color: white;
+}
 main > section div.flexcontainer{
     justify-content: center;
 }
@@ -625,6 +627,9 @@ main section:nth-child(even) {
     background-color: #0c2661;
 }
 
+.error {
+    color: red;
+}
 /*** TABLE ***/
 table {
     table-layout: fixed;
