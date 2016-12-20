@@ -21,6 +21,20 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function getCoordenates(direccion) {
+        var geocoder = new google.maps.Geocoder();
+
+        return new Promise(function (resolve, reject) {
+            geocoder.geocode({'address': direccion}, function (results, status) { // called asynchronously
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var posicion = results[0].geometry.location;
+                    resolve(posicion);
+                } else {
+                    reject(status);
+                }
+            });
+        });
+    }
     function getMapData() {//recoger los datos de empiece fin, modo de direcciones y del mapa
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -46,100 +60,47 @@ jQuery(document).ready(function($) {
         });
     }
 
-    function cargarMapa(results) {
+    function cargarMapa(result) {
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var element = document.getElementById('mapa');
-        var end = new google.maps.LatLng(results.latitude, results.longitude);
-        console.log(results.latitude, results.longitude);
+        var end = new google.maps.LatLng(result.latitude, result.longitude);
+
         var start = new google.maps.LatLng(43.2630126, -2.9349852000000283);
         var mapOptions = {center: end, zoom: 14, scrollwheel: false};
         var map = new google.maps.Map(element, mapOptions);
         var geocoder = new google.maps.Geocoder();
-        var address = 'Calle Gran Via 85, Bilbao, Bizkaia, España';
+        var address = 'Gran Via 85, Bilbao, Bizkaia, España';
         geocoder.geocode({'address': address}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
-                resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
+                start = results[0].geometry.location;
+                var request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: google.maps.DirectionsTravelMode.TRANSIT
+                };
+                directionsDisplay.setMap(map);
+                directionsDisplay.setPanel(document.getElementById('panel'));
+                // infowindow.open(map, marker);
+                //noinspection JSUnresolvedFunction
+                directionsService.route(request, function (response, status) {
+                    //noinspection JSUnresolvedVariable
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        //noinspection JSUnresolvedFunction
+                        directionsDisplay.setDirections(response);
+                    } else {
+                        console.log("error");
+                    }
                 });
-                // console.log(results[0].geometry.location);
+
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
-
-
-        var request = {
-            origin: start,
-            destination: end,
-            travelMode: google.maps.DirectionsTravelMode.TRANSIT
-        };
-        directionsDisplay.setMap(map);
-        directionsDisplay.setPanel(document.getElementById('panel'));
-        // infowindow.open(map, marker);
-        //noinspection JSUnresolvedFunction
-        directionsService.route(request, function (response, status) {
-            //noinspection JSUnresolvedVariable
-            if (status == google.maps.DirectionsStatus.OK) {
-                //noinspection JSUnresolvedFunction
-                directionsDisplay.setDirections(response);
-            } else {
-                console.log("error");
-            }
-        });
-    }
-
-    function calcularRutas(results) {
-        //var start = new google.maps.LatLng(43.2630126, -2.9349852000000283);
-        var map = results.map;
-        var start = results.start;
-        var end = results.end;
-        var mode = results.mode;//google.maps.DirectionsTravelMode.TRANSIT
-        var request = {
-            origin: start,
-            destination: end,
-            travelMode: google.maps.DirectionsTravelMode.TRANSIT
-        };
-        directionsDisplay.setMap(map);
-        directionsDisplay.setPanel(document.getElementById('panel'));
-
-        //noinspection JSUnresolvedFunction
-        directionsService.route(request, function (response, status) {
-            //noinspection JSUnresolvedVariable
-            if (status == google.maps.DirectionsStatus.OK) {
-                //noinspection JSUnresolvedFunction
-                directionsDisplay.setDirections(response);
-            } else {
-                console.log("error");
-            }
-        });
-        /*
-         // return promise
-         return new Promise(function(resolve,reject){
-         //noinspection JSUnresolvedFunction
-         directionsService.route(request, function(results, status) {
-         //noinspection JSUnresolvedVariable
-         if (status == google.maps.places.PlacesServiceStatus.OK) {
-         // resolve promise with results on OK status
-         resolve(results);
-         }else {
-         reject(status);
-         }
-         });
-         });
-         */
     }
 
     getPreciseLocation()
         .then(cargarMapa)
-        /*
-         .then(function (results) {
-         //cargarDatosOrigenDestino
-         calcularRutas(results);
-         //calcularDestino(start,end);
-         })*/
         .catch(function errorHandler(error) {
             console.log(error);
         });
